@@ -25,10 +25,23 @@ class Message(models.Model):
         on_delete=models.CASCADE
     )
 
+    users_read = models.ManyToManyField(
+        'User',
+        blank=True,
+        null=True,
+        related_name='messages_read'
+    )
+
     message_content = models.TextField(
         blank=False,
         null=False,
         validators=[validate_message_content]
+    )
+
+    message_image = models.ImageField(
+        upload_to='messages_image',
+        null=True,
+        blank=True
     )
 
     created_at = models.DateTimeField(auto_now_add=True, blank=True)

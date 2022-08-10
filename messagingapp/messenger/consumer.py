@@ -11,7 +11,7 @@ class ChatConsumer(WebsocketConsumer):
     def initialize_chat(self, text_data):
         username = text_data["username"]
 
-        user, created = User.objects.get_or_create(username=username)
+        user, _ = User.objects.get_or_create(username=username)
 
         if not user:
             self.send_message({"error": f'Unable to get or create User to initialize chat with username: {username}'})
@@ -28,7 +28,9 @@ class ChatConsumer(WebsocketConsumer):
         username = data["user"]
         content = data["content"]
         user, _ = User.objects.get_or_create(username=username)
+        print("create message ", user)
         message = Message.objects.create(user=user, message_content=content)
+        print("create message object ", message.message_content)
 
         response = {
             "event": "message_created",
@@ -41,6 +43,7 @@ class ChatConsumer(WebsocketConsumer):
             }
         }
 
+        print("create message ", response)
 
         self.send_chat_message(json.dumps(response))
 
@@ -55,6 +58,7 @@ class ChatConsumer(WebsocketConsumer):
 
             })
         return all_messages
+
     def connect(self):
         self.room_name = 'room'
         self.room_group_name = 'chat_%s' % self.room_name
