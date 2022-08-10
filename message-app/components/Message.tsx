@@ -1,6 +1,7 @@
 import { makeStyles, createStyles } from "@material-ui/styles";
+import React from "react";
 import { useStylesMessage } from "../styles/styles";
-
+import SnackbarContent from '@mui/material/SnackbarContent';
 
 
 interface MessageProps {
@@ -15,11 +16,8 @@ export const Message: React.FC<MessageProps> = (props: MessageProps) => {
         <div className={props.position === "right" ? styles.messageRowRight : styles.messageRow}> 
             {props.position === "left" && 
             <div className={styles.displayName}>{props?.displayName}</div>}
-            <div className={styles.messageStyle}>
-            <div>
-              <p className={styles.messageContent}>{props?.message}</p>
-            </div>
-
+            <div style={{margin: "10px"}}>
+            <SnackbarContent message={props?.message} style={{backgroundColor: "#A8DDFD", color: "black"}}/>
             </div>
         </div>
 
