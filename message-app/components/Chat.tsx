@@ -24,7 +24,7 @@ export const Chat: React.FC<ChatProps> = (props: ChatProps) => {
     useEffect(() => {
         props.socketFunctions(state.username)
         scrollToBottom()
-    }, [state.username])
+    }, [])
 
     useEffect(() => {
       scrollToBottom()
@@ -32,17 +32,13 @@ export const Chat: React.FC<ChatProps> = (props: ChatProps) => {
 
     const currentUser = props.username;
     const renderMessages = (messages) => {
-        return messages.map((message, i) => 
+        return messages.map((message) => 
         <Message 
         position={message.user === props.username ? "right" : "left"}
         displayName={ message.user }
         message={ message.content }
         />
         )
-      }
-
-    const messageChangeHandler = (event) =>  {
-        setCurrMessage(event.target.value)
       }
 
     const sendMessageHandler = (e) => {
@@ -86,7 +82,9 @@ export const Chat: React.FC<ChatProps> = (props: ChatProps) => {
             <TextField
               multiline
               type='text'
-              onChange={messageChangeHandler}
+              onChange={(event) =>  {
+                setCurrMessage(event.target.value)
+              }}
               value={currMessage}
               placeholder='Message'
               required />

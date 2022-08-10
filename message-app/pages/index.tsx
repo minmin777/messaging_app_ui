@@ -42,29 +42,13 @@ const Home: NextPage = () => {
     }
   }, [lastMessage, setMessageHistory]);
 
-  const waitForSocketConnection = (callback) => {
-    setTimeout(
-      function () {
-        // Check if websocket state is OPEN
-        if (readyState == ReadyState.OPEN) {
-          console.log("Connection is made")
-          callback();
-          return;
-        } else {
-          console.log("wait for connection...")
-          waitForSocketConnection(callback);
-        }
-    }, 100); // wait 100 milisecond for the connection...
-  }
-
-  
   const initChatUser = (username: string | undefined) => {
     setUsername(username!)
     setLoggedIn(true)
     sendMessage(JSON.stringify({ command: 'init_chat', username: username }));
   }
 
-  const fetchMessages = (username: string | undefined) => {
+  const fetchMessages = () => {
     sendMessage(JSON.stringify({ command: 'get_messages', username: username }));
   }
 
@@ -72,16 +56,16 @@ const Home: NextPage = () => {
       sendMessage(JSON.stringify({ command: 'create_message', user: message.user, content: message.content})); 
     }
 
-  const chatCallback = (username) => {waitForSocketConnection(() => {
+  const chatCallback = (username) => {
       initChatUser(username)
-      fetchMessages(username)
-    })}
+      fetchMessages()
+  }
   
 
   return (
     
 <div>
-      {state.loggedIn ? 
+      {loggedIn ? 
       <Chat username={username} socketFunctions={chatCallback} createMessage={newChatMessage}/> : 
       <InitializeChat initUser={initChatUser} />}  
     </div>
