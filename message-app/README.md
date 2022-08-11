@@ -16,7 +16,7 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+The front page logic is in `pages/index.tsx` such as opening a websocket to send and receive messages fromt he backend and the page design. It is using `reast-use-websocket` to open a websocket and all the functions to be able to receive and send messages and users are in `pages/index.tsx` which are then send to the children `Chat` and `InitializeChat`. `InitializeChat` component is used to create a username to enter the chat. This is a one room chat room. Once they create a username and a User is created in the backend, the actual chat room can be seen in `Chat` component. 
 
 [API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
 
