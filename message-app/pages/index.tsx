@@ -49,7 +49,7 @@ const Home: NextPage = () => {
   }
 
   const fetchMessages = () => {
-    sendMessage(JSON.stringify({ command: 'get_messages', username: username }));
+    sendMessage(JSON.stringify({ command: 'get_messages' }));
   }
 
   const newChatMessage =(message) => {
